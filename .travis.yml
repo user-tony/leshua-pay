@@ -7,7 +7,7 @@ install:
 script: "bundle exec rspec"
 
 gemfile:
-  - gemfile
+  - Gemfile
 
 matrix:
   fast_finish: true
