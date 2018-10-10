@@ -1,12 +1,15 @@
 # LeshuaPay
 
-A gem to deal with LeshuaPay. The LeshuaPay official document can be found [here](http://mch.weixin.qq.com/wiki/doc/api/index.html). You will receive the backend document when you get the LeshuaPay access.
+[![Build Status](https://travis-ci.org/user-tony/leshua-pay.svg?branch=master)](https://travis-ci.org/user-tony/leshua-pay)[![Inline docs](http://inch-ci.org/github/user-tony/leshua-pay.svg?branch=master)](http://inch-ci.org/github/user-tony/leshua-pay)
+
+
+A gem to deal with LeshuaPay. The LeshuaPay official document can be found [here](https://www.yeahka.com/leshua_index.html). You will receive the backend document when you get the LeshuaPay access.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'LeshuaPay', '~> 0.0.1'
+    gem 'leshua_pay', '~> 0.0.1'
 
 And then execute:
 
@@ -14,17 +17,18 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install LeshuaPay
+    $ gem install leshua_pay
 
-## Usage
+## Usage 
 
+ 
 ### Configuration
 
 ```ruby
 LeshuaPay.configure do |w|
-  w.app_id = 'wx123456'
-  w.mch_id = 'abcdefg'
-  w.payment_key = 'abc123'
+  w.app_id = 'sdfadfasfd'
+  w.mch_id = '0000000018'
+  w.payment_key = 'a1613a0e7cb9d3a51e33784ee4d212ac'
 end
 ```  
   
@@ -34,45 +38,43 @@ The params contains:
 - mch_id: 微信商户账号
 - payment_key: 商户支付秘钥
 
-### Unified Order/统一下单
+### 扫码支付
+```ruby
+  options = {
+    body: 'awesome product name'
+    third_order_id: '20150101030320204',
+    amount: 100, # in cents
+    client_ip: '127.0.0.1',
+    notify_url: 'http://example.com/notify',
+  }
+
+  body = LeshuaPay::Service.scan_code_pay(options)
+```
+
+### 条码支付
 ```ruby
 options = {
   body: 'awesome product name'
-  out_trade_no: '20150101030320204',
-  total_fee: 100, # in cents
-  spbill_create_ip: '127.0.0.1',
+  third_order_id: '20150101030320204',
+  auth_code: 'http://www.baidu.com',
+  amount: 100,
+  client_ip: '127.0.0.1',
   notify_url: 'http://example.com/notify',
-  trade_type: "JSAPI",
-  openid: '123123123'
 }
-response = LeshuaPay::Service.unified_order(options)
-prepay_id = response["prepay_id"]
+
+body = LeshuaPay::Service.barcode_pay(options)
+
 ```
 
 ### Refund/退款
 ```ruby
 options = {
-  out_trade_no: '20150101030320204',
-  out_refund_no: '334443222222222',
-  total_fee: 10000,
-  refund_fee: 10000,
-  refund_fee_type: 'CNY'
+  third_order_id: "asdfwfa3231214",
+  refund_amount: 1,
+  merchant_refund_id: SecureRandom.base64(64)
 }
-LeshuaPay::Service.refund(options, cert, cert_pwd)
+LeshuaPay::Service.refund(options)
 
-```
-
-### Generate payment params
-```ruby
-params = LeshuaPay::Service.pay_params(prepay_id)
-# {
-#    timestamp: 0, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-#   nonceStr: '', // 支付签名随机串，不长于 32 位
-#   package: '', // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-#   signType: '', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-#   paySign: '', // 支付签名
-# }
-```
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/LeshuaPay/fork )
