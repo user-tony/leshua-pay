@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = LeshuaPay::VERSION
   spec.authors       = ["Tony Tong"]
   spec.email         = ["tony.tong@striking.ly"]
-  spec.summary       = %q{A gem to deal with Wechat payment.}
-  spec.homepage      = ""
+  spec.summary       = %q{A gem to deal with leshua payment.}
+  spec.homepage      = "https://github.com/user-tony/leshua-pay"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
