@@ -24,6 +24,7 @@ module LeshuaPay
            :callback_url, :goods_tag, :limit_pay, :shop_no, :pos_no, :attach, :app_id)
 
         options = options.merge ext_opt
+
         http_post(Config::LEPOS_PAY_GATEWAY_URL, Sign.signature(options))
       end
 
