@@ -1,7 +1,6 @@
 require "leshua_pay/version"
-require "leshua_pay/sign"
-require "leshua_pay/utils"
-require "leshua_pay/service"
+require "leshua_pay/common/sign"
+require "leshua_pay/trade/service"
 
 module LeshuaPay
 
