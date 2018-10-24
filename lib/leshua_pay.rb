@@ -6,7 +6,7 @@ module LeshuaPay
 
   class Config
 
-    # API_HOST = 'https://testpaygate.yeahka.com'
+    # API_HOST = 'https://testpaygate.yeahka.s'
     API_HOST = 'https://mobilepos.yeahka.com'
     LEPOS_PAY_GATEWAY_URL = API_HOST + '/cgi-bin/lepos_pay_gateway.cgi'
 
