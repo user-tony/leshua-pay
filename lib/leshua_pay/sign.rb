@@ -15,6 +15,8 @@ module LeshuaPay
 
       def signature options
         to_param(options)+"&sign="+md5(options)
+        # options[:sign] = md5(options)
+        # options.to_json
       end
 
       def valid? options

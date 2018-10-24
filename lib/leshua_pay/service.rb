@@ -11,16 +11,16 @@ module LeshuaPay
       def scan_code_pay opt
         options = {
           merchant_id: Config.mch_id,
-          nonce_str: SecureRandom.base64(16),
+          nonce_str: SecureRandom.hex(16),
           service: 'get_tdcode',
           pay_way: 'WXZF',
           appid: Config.app_id,
           body: 'LeshuaPay',
-          jspay_flag: 0,
+          jspay_flag: 3,
         }
 
         ext_opt = opt.slice(
-          :pay_way, :sub_openid, :third_order_id, :body, :client_ip, :amount, :notify_url,
+          :pay_way, :sub_openid, :jspay_flag, :third_order_id, :body, :client_ip, :amount, :notify_url,
            :callback_url, :goods_tag, :limit_pay, :shop_no, :pos_no, :attach, :app_id)
 
         options = options.merge ext_opt
@@ -31,7 +31,7 @@ module LeshuaPay
       def barcode_pay opt
         options = {
           merchant_id: Config.mch_id,
-          nonce_str: SecureRandom.base64(16),
+          nonce_str: SecureRandom.hex(16),
           service: 'upload_authcode',
           appid: Config.app_id,
           body: 'LeshuaPay',
@@ -50,7 +50,7 @@ module LeshuaPay
           merchant_id: Config.mch_id,
           service: 'query_status',
           third_order_id: order_id,
-          nonce_str: SecureRandom.base64(16),
+          nonce_str: SecureRandom.hex(16),
         }
 
         http_post(Config::LEPOS_PAY_GATEWAY_URL, Sign.signature(options))
@@ -59,7 +59,7 @@ module LeshuaPay
       def refund opt
          options = {
           merchant_id: Config.mch_id,
-          nonce_str: SecureRandom.base64(16),
+          nonce_str: SecureRandom.hex(16),
           service: 'unified_refund',
         }
 
@@ -73,7 +73,7 @@ module LeshuaPay
       def unified_query_refund opt
          options = {
           merchant_id: Config.mch_id,
-          nonce_str: SecureRandom.base64(16),
+          nonce_str: SecureRandom.hex(16),
           service: 'unified_query_refund',
         }
 
@@ -87,6 +87,7 @@ module LeshuaPay
       private
 
       def http_post url, body
+        puts body
         response = HTTParty.post(
          url,
          body: body,
